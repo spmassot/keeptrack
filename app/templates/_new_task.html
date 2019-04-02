@@ -1,0 +1,22 @@
+{% macro task(number) -%}
+<tr class="table">
+  <th>
+    <input class="form-control" type="date" name="task{{number}}_date">
+  </th>
+  <th>
+    <input class="form-control" type="number" step="0.5" name="task{{number}}_hours">
+  </th>
+  <th>
+    <input class="form-control" type="text" name="task{{number}}_description" size="35">
+  </th>
+  <th>
+    <input class="form-control" type="number" step="5" value="40" name="task{{number}}_rate">
+  </th>
+</tr>
+{%- endmacro %}
+
+<tbody>
+  {% for t in range(7) %}
+    {{ task(t) }}
+  {% endfor %}
+</tbody>

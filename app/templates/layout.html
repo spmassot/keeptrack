@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/pulse/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <script type="text/javascript" src={{ url_for( 'static', filename='app.js' ) }}></script>
+
+    <title>My QiqBuks{% block title %}{% endblock %}</title>
+  </head>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-warning">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+  <body id="body-main">
+    {% include 'navbar.html' %}
+    <br/>
+    {% block body %}{% endblock %}
+    </div>
+  </body>
+</html>

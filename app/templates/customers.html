@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block title %}Customers{% endblock %}
+{% block body %}
+<div>
+  <table class="table center-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Attn:</th>
+        <th>Address 1</th>
+        <th>Address 2</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for customer in customers %}
+      {% include "_customer.html" %}
+    {% endfor %}
+    <tr class="table-light">
+      <th>
+        <a href="/customers/new" class="btn btn-outline-secondary">Add Customer +</a>
+      </th>
+    </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

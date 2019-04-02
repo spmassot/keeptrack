@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<div>
+  <table class="table center-table">
+    <thead>
+      <tr>
+        <th>Invoice Number</th>
+        <th>Customer</th>
+        <th>Invoice Date</th>
+        <th>Paid Date</th>
+        <th>Amount</th>
+        <th>Estimated Tax Liability</th>
+		<th/><th/>
+      </tr>
+    </thead>
+    <tbody>
+    {% for invoice in invoices|sort(attribute='issued_on', reverse=True) %}
+      {% include "_invoice.html" %}
+    {% endfor %}
+    <tr class="table-light">
+      <th>
+        <a href="/invoices/new" class="btn btn-outline-primary">Add Invoice <i class="fas fa-plus"></i></a>
+	  </th><th/><th/>
+	  <th>Totals: </th>
+	  <th>{{ "$ " ~ invoices|sum(attribute='total') }}</th>
+	  <th>{{ "$ " ~ invoices|sum(attribute='total') * 0.3|round(2) }}</th>
+    </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}
