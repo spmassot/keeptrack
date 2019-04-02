@@ -6,22 +6,19 @@
   <th>{{ "$ " ~ invoice.total }}</th>
   <th>{{ "$ " ~ invoice.total * 0.3|round(2) }}</th>
   <th>
-    <form action="/invoices/{{ invoice.id }}/download" method="post" id="invoice-download">
-      <button class="btn btn-outline-secondary btn-sm">Download <i class="fas fa-file-excel"></i></button>
-    </form>
-  </th>
-  {% if not invoice.paid_on %}
-  <th>
-    <form action="/invoices/{{ invoice.id }}/paid" method="post" id="invoice-paid">
-      <button class="btn btn-outline-success btn-sm">Mark Paid <i class="fas fa-dollar-sign"></i></button>
-    </form>
-  </th>
-  {% else %}
-  <th/>
-  {% endif %}
-  <th>
-    <form action="/invoices/{{ invoice.id }}/delete" method="post" id="invoice-delete">
-      <button class="btn btn-outline-danger btn-sm delete">Delete <i class="fas fa-trash-alt"></i></button>
-    </form>
+    <div class="btn-group">
+      <form action="/invoices/{{ invoice.id }}/download" method="post" id="invoice-download">
+        <button class="btn btn-outline-secondary"><i class="fas fa-file-excel"></i></button>
+      </form>
+    {% if not invoice.paid_on %}
+      <form action="/invoices/{{ invoice.id }}/paid" method="post" id="invoice-paid">
+        <button class="btn btn-outline-success"><i class="fas fa-dollar-sign"></i></button>
+      </form>
+    {% else %}
+    {% endif %}
+      <form action="/invoices/{{ invoice.id }}/delete" method="post" id="invoice-delete">
+        <button class="btn btn-outline-danger delete"><i class="fas fa-trash-alt"></i></button>
+      </form>
+    </div>
   </th>
 </tr>
