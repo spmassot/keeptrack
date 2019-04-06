@@ -4,10 +4,22 @@ from flask import Blueprint, render_template, request, redirect, url_for, send_f
 from src.models.invoice import Invoice, Task
 from src.models.customer import Customer
 from src.reports.invoice import InvoiceReportGenerator
+import src.data_utils as du
 
 
 
 routes = Blueprint('invoice', __name__, url_prefix='/invoices')
+
+
+@routes.route('/<invoice_id>', methods=['GET'])
+def show(invoice_id):
+    invoice = Invoice.get_one(invoice_id)
+    customers = Customer.scan()
+    invoice = du.left_join([invoice], 'customer_id', customers, 'id', ['name'])[0]
+    return render_template(
+        'invoice.html',
+        invoice=invoice
+    )
 
 
 @routes.route('/new', methods=['GET'])
@@ -40,18 +52,28 @@ def create():
     return redirect(url_for('index.index'))
 
 
+@routes.route('/<invoice_id>/archive', methods=['POST'])
+def mark_archived(invoice_id):
+    invoice = Invoice.get_one(invoice_id)
+    invoice.set_attributes(archived=True)
+    return redirect(request.referrer)
+
+
 @routes.route('/<invoice_id>/paid', methods=['POST'])
 def mark_paid(invoice_id):
     invoice = Invoice.get_one(invoice_id)
     invoice.set_attributes(paid_on=datetime.now())
-    return redirect(url_for('index.index'))
+    return redirect(request.referrer)
 
 
 @routes.route('/<invoice_id>/delete', methods=['POST'])
 def delete_invoice(invoice_id):
     invoice = Invoice.get_one(invoice_id)
     invoice.delete()
-    return redirect(url_for('index.index'))
+    if not invoice.archived:
+        return redirect(url_for('index.index'))
+    else:
+        return redirect(url_for('archive.archive'))
 
 
 @routes.route('/<invoice_id>/download', methods=['POST'])

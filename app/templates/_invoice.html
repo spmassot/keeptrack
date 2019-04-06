@@ -1,4 +1,4 @@
-<tr {% if invoice.paid_on %} class="table-success" {% endif %}>
+<tr class="{% if invoice.paid_on %}table-success {% endif %} invoice-row" data-href="/invoices/{{invoice.id}}">
   <th>{{ invoice.number }}</th>
   <th>{{ invoice.Customer_name }}</th>
   <th>{{ invoice.issued_on|format_datetime }}</th>
@@ -16,6 +16,9 @@
       </form>
     {% else %}
     {% endif %}
+      <form action="/invoices/{{ invoice.id }}/archive" method="post" id="invoice-archive">
+        <button class="btn btn-outline-warning"><i class="fas fa-archive"></i></button>
+      </form>
       <form action="/invoices/{{ invoice.id }}/delete" method="post" id="invoice-delete">
         <button class="btn btn-outline-danger delete"><i class="fas fa-trash-alt"></i></button>
       </form>

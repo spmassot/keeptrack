@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="col-lg-4">
+  <h2>Invoice {{invoice.number}}</h2>
+</div>
+<br/>
+<div class="container jumbotron float-left">
+  <div class="row">
+    <div class="col-sm">
+      <h3 class="text-muted">Customer Name</h3>
+    </div>
+    <div class="col-sm">
+      <h3>{{invoice.Customer_name}}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <h3 class="text-muted">Issued On</h3>
+    </div>
+    <div class="col-sm">
+      <h3>{{invoice.issued_on|format_datetime}}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <h3 class="text-muted">Paid On</h3>
+    </div>
+    <div class="col-sm">
+      <h3>{{invoice.paid_on|format_datetime}}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <h3 class="text-muted">Archived</h3>
+    </div>
+    <div class="col-sm">
+      <h3>{{invoice.archived|format_bool}}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <h3 class="text-muted">Total</h3>
+    </div>
+    <div class="col-sm">
+      <h3>{{"$ " ~ invoice.total}}</h3>
+    </div>
+  </div>
+</div>
+<br/>
+<div class="col-lg-6">
+  <legend>Line Items</legend>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Hours</th>
+        <th>Description</th>
+        <th>Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for task in invoice.tasks %}
+      {% include "_task.html" %}
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="btn-group col-lg-4">
+  <form action="/invoices/{{ invoice.id }}/download" method="post" id="invoice-download">
+    <button class="btn btn-outline-secondary btn-lg">Download <i class="fas fa-file-excel"></i></button>
+  </form>
+{% if not invoice.paid_on %}
+  <form action="/invoices/{{ invoice.id }}/paid" method="post" id="invoice-paid">
+    <button class="btn btn-outline-success btn-lg">Mark Paid <i class="fas fa-dollar-sign"></i></button>
+  </form>
+{% else %}
+{% endif %}
+{% if not invoice.archived %}
+  <form action="/invoices/{{ invoice.id }}/archive" method="post" id="invoice-archive">
+    <button class="btn btn-outline-warning btn-lg">Archive <i class="fas fa-archive"></i></button>
+  </form>
+{% endif %}
+  <form action="/invoices/{{ invoice.id }}/delete" method="post" id="invoice-delete">
+    <button class="btn btn-outline-danger delete btn-lg">Delete <i class="fas fa-trash-alt"></i></button>
+  </form>
+</div>
+{% endblock %}

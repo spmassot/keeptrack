@@ -1,0 +1,6 @@
+<tr class="table-dark invoice-row" data-href="/invoices/{{invoice.id}}">
+  <th>{{ invoice.number }}</th>
+  <th>{{ invoice.issued_on|format_datetime }}</th>
+  <th>{{ invoice.paid_on|format_datetime }}</th>
+  <th>{{ "$ " ~ invoice.total }}</th>
+</tr>

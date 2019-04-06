@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<div>
+  <div class="center-table">
+    <h1 class="text-muted">Archived Invoices</h1>
+  </div>
+  <table class="table center-table table-hover">
+    <thead>
+      <tr>
+        <th>Invoice Number</th>
+        <th>Invoice Date</th>
+        <th>Paid Date</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for invoice in invoices|sort(attribute='issued_on', reverse=True) %}
+      {% include "_archive.html" %}
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
