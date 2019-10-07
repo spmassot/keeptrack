@@ -73,8 +73,10 @@
   <form action="/invoices/{{ invoice.id }}/paid" method="post" id="invoice-paid">
     <button class="btn btn-outline-success btn-lg">Mark Paid <i class="fas fa-dollar-sign"></i></button>
   </form>
-{% else %}
 {% endif %}
+  <form action="/invoices/{{ invoice.id }}/send" method="post" id="invoice-send">
+    <button class="btn btn-outline-primary send btn-lg">Send <i class="fas fa-paper-plane"></i></button>
+  </form>
 {% if not invoice.archived %}
   <form action="/invoices/{{ invoice.id }}/archive" method="post" id="invoice-archive">
     <button class="btn btn-outline-warning btn-lg">Archive <i class="fas fa-archive"></i></button>

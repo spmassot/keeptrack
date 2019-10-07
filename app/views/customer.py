@@ -16,6 +16,7 @@ def index():
         new_customer = Customer(
             id=str(uuid()),
             name=request.form.get('customer_name'),
+            email=request.form.get('customer_email'),
             attn=request.form.get('customer_attn'),
             address_1=request.form.get('customer_addr1'),
             address_2=request.form.get('customer_addr2'),

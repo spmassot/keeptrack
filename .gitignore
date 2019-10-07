@@ -1,2 +1,4 @@
 docker-compose.local.yml
 tags
+*__pyache__*
+*.pyc

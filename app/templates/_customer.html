@@ -1,8 +1,9 @@
 <tr class="table-secondary">
   <th>{{ customer.name }}</th>
+  <th>{{ customer.email }}</th>
   <th>{{ customer.attn }}</th>
   <th>{{ customer.address_1 }}</th>
-  <th>{{ customer.address_2 }}</th>
+  <th>{{ customer.address_2 or '' }}</th>
   <th>{{ customer.city }}</th>
   <th>{{ customer.state }}</th>
   <th>{{ customer.zip_code }}</th>

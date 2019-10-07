@@ -17,6 +17,7 @@ class Customer(BaseModel):
     city = atr.UnicodeAttribute()
     state = atr.UnicodeAttribute()
     zip_code = atr.UnicodeAttribute()
+    email = atr.UnicodeAttribute()
 
 
 def init():
