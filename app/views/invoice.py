@@ -53,6 +53,27 @@ def create():
     return redirect(url_for('index.index'))
 
 
+@routes.route('/<invoice_id>', methods=['POST'])
+def update():
+    invoice = Invoice.get(invoice_id)
+    tasks = [
+        Task(
+            date=request.form.get(f'task{i}_date'),
+            hours=float(request.form.get(f'task{i}_hours')),
+            description=request.form.get(f'task{i}_description'),
+            rate=float(request.form.get(f'task{i}_rate'))
+        ) for i in range(7) if request.form.get(f'task{i}_hours') != ''
+    ]
+    invoice.number = int(request.form.get('invoice_number')),
+    invoice.customer_id = request.form.get('customer_select'),
+    invoice.issued_on = datetime.now(),
+    invoice.total = sum([t.hours * t.rate for t in tasks]),
+    invoice.tasks = [t.__dict__ for t in tasks]
+    invoice.save()
+
+    return redirect(url_for('index.index'))
+
+
 @routes.route('/<invoice_id>/archive', methods=['POST'])
 def mark_archived(invoice_id):
     invoice = Invoice.get_one(invoice_id)
@@ -87,5 +108,5 @@ def download_invoice(invoice_id):
 def send_invoice(invoice_id):
     invoice = Invoice.get_one(invoice_id)
     i = InvoiceReportGenerator(invoice)
-    Mailer(i).send_invoice()
+    # Mailer(i).send_invoice()
     return redirect(request.referrer)

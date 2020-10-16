@@ -16,3 +16,7 @@ services:
       - ADDR_ZIP=
       - ADDR_PHONE=
       - ADDR_EMAIL=
+      - SENDER_ADDRESS=
+      - SENDER_PASSWORD=
+      - SMTP_SERVER=
+      - SMTP_PORT=
