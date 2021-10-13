@@ -1,7 +1,6 @@
 from uuid import uuid4 as uuid
 from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, send_file
-from src.mailer import Mailer
 from src.models.invoice import Invoice, Task
 from src.models.customer import Customer
 from src.reports.invoice import InvoiceReportGenerator
@@ -102,11 +101,3 @@ def download_invoice(invoice_id):
     i = InvoiceReportGenerator(invoice)
     report = i.write_report()
     return send_file(report[1], attachment_filename=report[0], as_attachment=True)
-
-
-@routes.route('/<invoice_id>/send', methods=['POST'])
-def send_invoice(invoice_id):
-    invoice = Invoice.get_one(invoice_id)
-    i = InvoiceReportGenerator(invoice)
-    # Mailer(i).send_invoice()
-    return redirect(request.referrer)
