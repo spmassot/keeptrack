@@ -1,4 +1,3 @@
-from dotenv import load_dotenv
 from datetime import timedelta
 from pathlib import Path
 from src.custom_filters import CUSTOM_FILTERS
@@ -6,8 +5,6 @@ from importlib import import_module
 from flask import Flask
 import logging
 
-
-load_dotenv()
 
 application = Flask(__name__)
 application.logger.handlers = []

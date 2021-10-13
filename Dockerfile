@@ -1,4 +1,4 @@
-FROM python:3.7-slim AS release
+FROM python:3.9-slim AS release
 
 # Create app directory
 WORKDIR /app
